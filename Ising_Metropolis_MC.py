@@ -10,6 +10,12 @@ from matplotlib import colors
 import matplotlib.animation as animation
 
 #------------------------------------------------------------------------------# 
+# Color maps
+#------------------------------------------------------------------------------#
+
+cmap1 = colors.ListedColormap(('#8e82fe','#580f41')) #periwinkle and plum
+
+#------------------------------------------------------------------------------# 
 # Functions
 #------------------------------------------------------------------------------#
 
@@ -29,8 +35,8 @@ def system_energy(lattice, J, H):
 	nrow,ncol = lattice.shape
 	E = 0.0
 
-	for i in xrange(nrow):
-		for j in xrange(ncol):
+	for i in range(nrow):
+		for j in range(ncol):
 
 			S  = lattice[i,j]
 			NS = lattice[(i+1)%nrow, j] + lattice[i,(j+1)%ncol] + lattice[(i-1)%nrow, j] + lattice[i,(j-1)%ncol]
@@ -52,8 +58,8 @@ def MC_cycle(lattice, J, H, T):
 	E = system_energy(lattice, J, H) 
 	M = system_magnetization(lattice)
 
-	for i in xrange(nrow): 
-		for j in xrange(ncol):
+	for i in range(nrow): 
+		for j in range(ncol):
 
 			S  = lattice[i,j]
 			NS = lattice[(i+1)%nrow, j] + lattice[i,(j+1)%ncol] + lattice[(i-1)%nrow, j] + lattice[i,(j-1)%ncol]
@@ -106,9 +112,6 @@ def cooling(lattice, T_range, N_cycles, J=1, H=0):
 
 	return summary
 
-cmap1 = colors.ListedColormap(('#8e82fe','#580f41'))
-
-@jit
 def animate_run(LvS, size=(5,5), fps=15, bitrate=1800, filename='run', ticks='off', dpi=100, cmap=cmap1):
 
 	Writer = animation.writers['ffmpeg']
@@ -118,13 +121,14 @@ def animate_run(LvS, size=(5,5), fps=15, bitrate=1800, filename='run', ticks='of
 	plt.axis(ticks)
 	
 	for L in LvS:
+		
+		L = np.where(L==1.0, 0, 255)
 		im = plt.imshow(L, origin='lower', cmap=cmap)
 		ims.append([im])
 
 	ani = animation.ArtistAnimation(FIG, ims, interval=50, blit=True, repeat_delay=1000)
 	ani.save(filename + '.mp4', dpi=dpi)
 
-@jit 
 def animate_cooling(summary, size=(5,5), fps=15, bitrate=1800, filename='vary', ticks='off', dpi=100, cmap=cmap1):
 
 	Writer = animation.writers['ffmpeg']
@@ -138,6 +142,8 @@ def animate_cooling(summary, size=(5,5), fps=15, bitrate=1800, filename='vary', 
 		var, EvS, MvS, LvS = line
 
 		for L in LvS:
+
+			L = np.where(L==1.0, 0, 255)
 			im = plt.imshow(L, origin='lower', cmap=cmap)
 			ims.append([im])
 
@@ -149,8 +155,9 @@ def animate_cooling(summary, size=(5,5), fps=15, bitrate=1800, filename='vary', 
 #------------------------------------------------------------------------------#
 
 start_time = time.time()
-L = initialize_lattice_random(10, 10)
-FL, EvS, MvS, LvS = run(L, 1, 0, 1, 200, standard_output=False)
+L = initialize_lattice_random(500, 500)
+#L = initialize_lattice_uniform(200, 200)
+FL, EvS, MvS, LvS = run(L, 0.8, 0, 1.0, 1000, standard_output=True)
 animate_run(LvS)
 
 ### Plot of E vs step
