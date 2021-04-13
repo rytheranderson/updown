@@ -101,11 +101,7 @@ def run(lattice, J, H, T, N_cycles, standard_output=False):
 def cooling(lattice, T_range, N_cycles, J=1, H=0):
 
 	summary = []
-	val = 0
-
 	for T in T_range:
-
-		print(T)
 
 		FL, EvS, MvS, LvS , N_converge = run(lattice, J, H, T, N_cycles)
 		summary.append([J, EvS, MvS, LvS])
@@ -114,8 +110,7 @@ def cooling(lattice, T_range, N_cycles, J=1, H=0):
 
 def animate_run(LvS, size=(5,5), fps=15, bitrate=1800, filename='run', ticks='off', dpi=100, cmap=cmap1):
 
-	Writer = animation.writers['ffmpeg']
-	writer = Writer(fps=fps, metadata=dict(artist='Me'), bitrate=bitrate)
+	writer = animation.PillowWriter(fps=fps, metadata=dict(artist='Me'), bitrate=bitrate)
 	FIG = plt.figure(figsize=size)
 	ims = []
 	plt.axis(ticks)
@@ -127,12 +122,11 @@ def animate_run(LvS, size=(5,5), fps=15, bitrate=1800, filename='run', ticks='of
 		ims.append([im])
 
 	ani = animation.ArtistAnimation(FIG, ims, interval=50, blit=True, repeat_delay=1000)
-	ani.save(filename + '.mp4', dpi=dpi)
+	ani.save(filename + '.gif', dpi=dpi, writer=writer)
 
 def animate_cooling(summary, size=(5,5), fps=15, bitrate=1800, filename='vary', ticks='off', dpi=100, cmap=cmap1):
 
-	Writer = animation.writers['ffmpeg']
-	writer = Writer(fps=fps, metadata=dict(artist='Me'), bitrate=bitrate)
+	writer = animation.PillowWriter(fps=fps, metadata=dict(artist='Me'), bitrate=bitrate)
 	FIG = plt.figure(figsize=size)
 	ims = []
 	plt.axis(ticks)
@@ -148,14 +142,14 @@ def animate_cooling(summary, size=(5,5), fps=15, bitrate=1800, filename='vary', 
 			ims.append([im])
 
 	ani = animation.ArtistAnimation(FIG, ims, interval=50, blit=True, repeat_delay=1000)
-	ani.save(filename + '.mp4', dpi=dpi)
+	ani.save(filename + '.gif', dpi=dpi, writer=writer)
 
 #------------------------------------------------------------------------------# 
 # Usage example
 #------------------------------------------------------------------------------#
 
 start_time = time.time()
-L = initialize_lattice_random(500, 500)
+L = initialize_lattice_random(100, 100)
 #L = initialize_lattice_uniform(200, 200)
 FL, EvS, MvS, LvS = run(L, 0.8, 0, 1.0, 1000, standard_output=True)
 animate_run(LvS)
