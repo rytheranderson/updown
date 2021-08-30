@@ -190,7 +190,7 @@ if __name__ == '__main__':
 
     start_time = time.time()
     L = initialize_lattice_random(200, 200)
-    FL, EvS, MvS, LvS = run(L, 300, J=0.75, H=0, T=1.0, standard_output=True)
+    FL, EvS, MvS, LvS = run(L, 300, J=0.8, H=0, T=1.0, standard_output=True)
     animate_run(LvS)
         
     fig = plt.figure(figsize=(4,3))
