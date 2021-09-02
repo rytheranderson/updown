@@ -5,7 +5,7 @@ This code was designed to be simple and fast, allowing for the simulations of re
 Keep in mind that the runs are fast, but the animation is not.
 
 <p align="center">
-<img src="./run.gif" width="800" height="600"/>
+<img src="./run.gif" width="800" height="800"/>
 </p>
 
 An example run animated. This run corresponds to a ferromagnetic 200x200 lattice that was randomly initialized.
