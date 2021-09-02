@@ -12,7 +12,7 @@ An example run animated. This run corresponds to a ferromagnetic 200x200 lattice
 Here is the code used to produce the image:
 
 ```
-L = initialize_lattice_random(200, 200)
-FL, EvS, MvS, LvS = run(L, 300, J=0.8, H=0, T=1.0, standard_output=True)
-animate_run(LvS)
+L = initialize_lattice_random(1000, 1000)
+summary, frames = cooling(L, np.linspace(2,0.5,20), 20)
+fast_animate_run(frames, size=(500,500))
 ```

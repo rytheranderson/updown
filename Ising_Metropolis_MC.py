@@ -2,6 +2,7 @@ from __future__ import print_function
 import numpy as np
 from numba import jit
 import time
+from PIL import Image
 
 import matplotlib
 matplotlib.use('Agg')
@@ -116,14 +117,13 @@ def run(lattice, N_cycles, J=1, H=0, T=1.0, standard_output=False):
         if standard_output:
             print('cycle', cyc + 1, 'out of', N_cycles)
 
-        lattice,E,M,naccept = MC_cycle(lattice, J, H, T)
+        lattice, E, M, naccept = MC_cycle(lattice, J, H, T)
         lattice_evolve[cyc] += lattice
         energy_vs_step.append(E)
         magnet_vs_step.append(M)
 
     return lattice, energy_vs_step, magnet_vs_step, lattice_evolve
 
-@jit
 def cooling(lattice, T_range, N_cycles, J=1, H=0):
 
     """
@@ -131,56 +131,57 @@ def cooling(lattice, T_range, N_cycles, J=1, H=0):
     """
 
     summary = []
+    frames = []
+    FL = lattice
+
     for T in T_range:
 
-        FL, EvS, MvS, LvS , N_converge = run(lattice, J, H, T, N_cycles)
-        summary.append([J, EvS, MvS, LvS])
+        print(f'Temperature = {np.round(T,3)}')
+        FL, EvS, MvS, LvS = run(lattice, N_cycles, J=J, H=H, T=T) # make sure the lattice is the same for next T
+        summary.append([J, EvS, MvS])
+        frames.extend(LvS)
 
-    return summary
+    return summary, frames
 
 def animate_run(LvS, size=(5,5), fps=15, bitrate=1800, filename='run', ticks='off', dpi=100, cmap=cmap1):
 
     """
-        function used to produce run animations
+        function used to produce run animations, takes awhile, suitable for small/short runs,
+        has the advantage of producing clear images of any size
     """
 
     writer = animation.PillowWriter(fps=fps, metadata=dict(artist='Me'), bitrate=bitrate)
-    FIG = plt.figure(figsize=size)
+    FIG, ax = plt.subplots(figsize=size)
     ims = []
     plt.axis(ticks)
     
     for L in LvS:
         
         L = np.where(L==1.0, 0, 255)
-        im = plt.imshow(L, origin='lower', cmap=cmap)
+        im = ax.imshow(L, origin='lower', cmap=cmap)
         ims.append([im])
-
+        
     ani = animation.ArtistAnimation(FIG, ims, interval=50, blit=True, repeat_delay=1000)
     ani.save(filename + '.gif', dpi=dpi, writer=writer)
 
-def animate_cooling(summary, size=(5,5), fps=15, bitrate=1800, filename='vary', ticks='off', dpi=100, cmap=cmap1):
+def fast_animate_run(LvS, resize=True, size=(200,200), fastest=True, filename='run', ticks='off', cmap=cmap1):
 
     """
-        animate a cooling simulation
+        use this to animate very large/long runs
+        fastest = True writes a black and white image, but is much faster than using a colormap
+        recommended for systems larger than 200x200 lattice points
+        size is in pixels
     """
 
-    writer = animation.PillowWriter(fps=fps, metadata=dict(artist='Me'), bitrate=bitrate)
-    FIG = plt.figure(figsize=size)
-    ims = []
-    plt.axis(ticks)
+    if fastest:
+        gif = [Image.fromarray(np.uint8(L)).convert('RGB') for L in LvS]
+    else:
+        gif = [Image.fromarray(np.uint8(cmap(L)*255)) for L in LvS]
     
-    for line in summary:
+    if resize:
+        gif = [img.resize(size) for img in gif]
 
-        var, EvS, MvS, LvS = line
-
-        for L in LvS:
-
-            L = np.where(L==1.0, 0, 255)
-            im = plt.imshow(L, origin='lower', cmap=cmap)
-            ims.append([im])
-
-    ani = animation.ArtistAnimation(FIG, ims, interval=50, blit=True, repeat_delay=1000)
-    ani.save(filename + '.gif', dpi=dpi, writer=writer)
+    gif[0].save(filename + '.gif', save_all=True, optimize=False, append_images=gif[1:], loop=0)
 
 #------------------------------------------------------------------------------# 
 # Usage example
@@ -189,23 +190,9 @@ def animate_cooling(summary, size=(5,5), fps=15, bitrate=1800, filename='vary', 
 if __name__ == '__main__':
 
     start_time = time.time()
-    L = initialize_lattice_random(200, 200)
-    FL, EvS, MvS, LvS = run(L, 300, J=0.8, H=0, T=1.0, standard_output=True)
-    animate_run(LvS)
-        
-    fig = plt.figure(figsize=(4,3))
-    plt.xlabel('MC Cycles')
-    plt.ylabel('Energy')
-    plt.plot(range(len(EvS)), EvS)
-    plt.savefig('EvS.png', dpi=300, bbox_inches='tight')
-    plt.close(fig)
-    
-    fig = plt.figure(figsize=(4,3))
-    plt.xlabel('MC Cycles')
-    plt.ylabel('Magnetization')
-    plt.plot(range(len(MvS)), MvS)
-    plt.savefig('MvS.png', dpi=300, bbox_inches='tight')
-    plt.close(fig)
-    
-    print('Normal termination after')
+    L = initialize_lattice_random(1000, 1000)
+    summary, frames = cooling(L, np.linspace(2,0.5,20), 20)
+
+    fast_animate_run(frames, size=(500,500))
     print('--- %s seconds ---' % (time.time() - start_time))
+    
