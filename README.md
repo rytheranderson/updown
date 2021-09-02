@@ -1,4 +1,4 @@
-# Ising_model
+# A Fast Python Implementation of the Ising Model
 
 Python 3 code for running 1 to 3D Ising models and visualizing the results. 
 This code was designed to be simple and fast, allowing for the simulations of relatively large lattices.
