@@ -8,7 +8,8 @@ Keep in mind that the runs are fast, but the animation is not.
 <img src="./run_cooling.gif" width="500" height="500"/>
 </p>
 
-An example run animated. This run corresponds to a ferromagnetic 200x200 lattice that was randomly initialized.
+An example run animated. This run corresponds to a ferromagnetic 1000x1000 lattice that was randomly initialized.
+The temperature was decreased linearly from 2 to 0.5 in 20 stages (20 cycles each).
 Here is the code used to produce the image:
 
 ```
