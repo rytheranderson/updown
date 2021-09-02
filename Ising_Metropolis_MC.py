@@ -192,7 +192,6 @@ if __name__ == '__main__':
     start_time = time.time()
     L = initialize_lattice_random(1000, 1000)
     summary, frames = cooling(L, np.linspace(2,0.5,20), 20)
-
     fast_animate_run(frames, size=(500,500))
     print('--- %s seconds ---' % (time.time() - start_time))
     
