@@ -14,8 +14,8 @@ Here is the code used to produce the image:
 
 ```
 L = initialize_lattice_random(1000, 1000)
-summary, frames = cooling(L, np.linspace(2,0.5,20), 20)
-fast_animate_run(frames, size=(500,500))
+summary, frames = cooling(L, np.linspace(2, 0.5, 20), 20)
+fast_animate_run(frames, size=(500, 500))
 ```
 
 this animation function uses PIL Image objects to build a .gif, which is much faster than
