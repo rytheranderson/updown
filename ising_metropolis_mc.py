@@ -34,7 +34,9 @@ def initialize_lattice_uniform(nrow, ncol, spin=1):
 def system_energy(lattice, J, H):
 
     """
-        J is the spin interaction parameter, J > 0 = ferromagnetic, J < 0 = antiferromagnetic
+        J is the spin interaction parameter,
+        J > 0 = ferromagnetic
+        J < 0 = antiferromagnetic
         H is an external magnetic field (constant)
     """
 
@@ -65,7 +67,7 @@ def system_magnetization(lattice):
 
 
 @jit
-def MC_cycle(lattice, J, H, T):
+def mc_cycle(lattice, J, H, T):
 
     """
         A single MC cycle (considering all lattice points)
@@ -101,24 +103,24 @@ def MC_cycle(lattice, J, H, T):
 
 
 @jit
-def run(lattice, N_cycles, J=1, H=0, T=1.0, standard_output=False):
+def run(lattice, n_cycles, J=1, H=0, T=1.0, standard_output=False):
 
     """
-        The summary function, which runs an MC simulation of N_cycles
+        The summary function, which runs an MC simulation of n_cycles
     """
 
     nrow, ncol = lattice.shape
 
-    lattice_evolve = [np.zeros((nrow, ncol)) for i in range(N_cycles)]
+    lattice_evolve = [np.zeros((nrow, ncol)) for i in range(n_cycles)]
     energy_vs_step = []
     magnet_vs_step = []
 
-    for cyc in range(N_cycles):
+    for cyc in range(n_cycles):
 
         if standard_output:
-            print('cycle', cyc + 1, 'out of', N_cycles)
+            print(f'cycle {cyc + 1} out of {n_cycles}')
 
-        lattice, E, M, naccept = MC_cycle(lattice, J, H, T)
+        lattice, E, M, naccept = mc_cycle(lattice, J, H, T)
         lattice_evolve[cyc] += lattice
         energy_vs_step.append(E)
         magnet_vs_step.append(M)
@@ -126,7 +128,7 @@ def run(lattice, N_cycles, J=1, H=0, T=1.0, standard_output=False):
     return lattice, energy_vs_step, magnet_vs_step, lattice_evolve
 
 
-def cooling(lattice, T_range, N_cycles, J=1, H=0):
+def cooling(lattice, temp_range, n_cycles, J=1, H=0):
 
     """
         a series of runs at decreasing temperatures
@@ -136,10 +138,10 @@ def cooling(lattice, T_range, N_cycles, J=1, H=0):
     frames = []
     FL = lattice
 
-    for T in T_range:
+    for T in temp_range:
 
         print(f'Temperature = {np.round(T,3)}')
-        FL, EvS, MvS, LvS = run(lattice, N_cycles, J=J, H=H, T=T)
+        FL, EvS, MvS, LvS = run(lattice, n_cycles, J=J, H=H, T=T)
         summary.append([J, EvS, MvS])
         frames.extend(LvS)
 
@@ -193,7 +195,7 @@ def fast_animate_run(LvS, resize=True, size=(200, 200), fastest=True, filename='
 if __name__ == '__main__':
 
     start_time = time.time()
-    L = initialize_lattice_random(1000, 1000)
+    L = initialize_lattice_random(5000, 5000)
     summary, frames = cooling(L, np.linspace(2, 0.5, 20), 20)
     fast_animate_run(frames, size=(500, 500))
     print('--- %s seconds ---' % (time.time() - start_time))
