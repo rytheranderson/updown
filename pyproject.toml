@@ -1,0 +1,84 @@
+[tool.poetry]
+name = "updown"
+version = "0.0.1"
+description = "Fast Monte Carlo simulation of the Ising model written in Python"
+authors = ["Ryther Anderson"]
+readme = "README.md"
+repository = "https://github.com/rytheranderson/updown"
+include = [
+    "README.md",
+    "pyproject.toml",
+]
+packages = [
+  {include = "updown"}
+]
+
+[tool.poetry.dependencies]
+python = "^3.8.1"
+numpy = "^1.24.3"
+numba = "^0.57.0"
+matplotlib = "^3.7.1"
+nptyping = "^2.5.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+cruft = "^2.15.0"
+flake8 = "^6.0.0"
+flake8-docstrings = "^1.7.0"
+flake8-bugbear = "^23.5.9"
+hypothesis = "^6.75.6"
+isort = "^5.12.0"
+mypy = "^1.3.0"
+pre-commit = "^3.3.2"
+pytest = "^7.3.1"
+pytest-cov = "^4.1.0"
+pytest-mock = "^3.10.0"
+tbump = "^6.10.0"
+tox = "^3.24"
+tox-gh-actions = "^2.8"
+tox-poetry-installer = "^0.10.0"
+
+[tool.black]
+line-length = 88
+experimental_string_processing = true
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.tbump.version]
+current = "0.0.1"
+
+regex = '''
+  (?P<major>\d+)
+  \.
+  (?P<minor>\d+)
+  \.
+  (?P<patch>\d+)
+  '''
+
+[tool.tbump.git]
+message_template = "Bump to {new_version}"
+tag_template = "v{new_version}"
+
+[[tool.tbump.file]]
+src = "pyproject.toml"
+search = 'current = "{current_version}"'
+
+[[tool.tbump.file]]
+src = "pyproject.toml"
+search = 'version = "{current_version}"'
+
+[[tool.tbump.file]]
+src = "updown/__init__.py"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

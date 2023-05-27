@@ -1,22 +1,18 @@
-# A Fast Python Implementation of the Ising Model
+# updown
 
-Python 3 code for running 1 or 2D Ising models and visualizing the results. 
-This code was designed to be simple and fast, allowing for the simulation of relatively large lattices.
-Keep in mind that the runs are fast, but the animations can take awhile.
+Python for running 1 or 2D Ising models and visualizing the results. The code
+was designed to be simple and fast, allowing for the simulation of relatively
+large lattices.
 
 <p align="center">
-<img src="./run_cooling.gif" width="500" height="500"/>
+<img src="./run_animation.gif" width="500" height="500"/>
 </p>
 
-An example run animated. This run corresponds to a ferromagnetic 1000x1000 lattice that was randomly initialized.
-The temperature was decreased linearly from 2 to 0.5 in 20 stages (20 cycles each).
-Here is the code used to produce the image:
+An example run animated. This run corresponds to a ferromagnetic 2000 x 2000
+lattice that was randomly initialized. The temperature was decreased linearly
+from 2 to 0.5 in 20 stages (20 cycles each). The included `run.py` script was
+used to create the animation, thus:
 
 ```
-L = initialize_lattice_random(1000, 1000)
-summary, frames = cooling(L, np.linspace(2, 0.5, 20), 20)
-fast_animate_run(frames, size=(500, 500))
-```
-
-this animation function uses PIL Image objects to build a .gif, which is much faster than
-matplotlib animation, but has less functionality (I think).
+python run.py -W 2000 -H 2000 -N 20 --start-temp 2.0 --end-temp 0.5
+``

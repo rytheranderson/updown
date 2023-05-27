@@ -1,0 +1,16 @@
+{
+  "template": "https://github.com/rytheranderson/oatmeal-raisin/",
+  "commit": "39161c5dede907f15835bc128ad9348eadf48ff3",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "full_name": "Ryther Anderson",
+      "github_username": "rytheranderson",
+      "project_name": "updown",
+      "description": "Fast Monte Carlo simulation of the Ising model written in Python",
+      "version": "0.0.1",
+      "_template": "https://github.com/rytheranderson/oatmeal-raisin/"
+    }
+  },
+  "directory": null
+}
