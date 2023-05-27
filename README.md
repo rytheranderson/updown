@@ -15,4 +15,4 @@ used to create the animation, thus:
 
 ```
 python run.py -W 2000 -H 2000 -N 20 --start-temp 2.0 --end-temp 0.5
-``
+```
