@@ -72,7 +72,7 @@ def run(
         The last frame of the run and the lattice after each cycle.
     """
     nrow, ncol = lattice.shape
-    frames = [np.zeros((nrow, ncol)) for i in range(ncycles)]
+    frames = [np.zeros((nrow, ncol), dtype=np.int64) for i in range(ncycles)]
     for cyc in range(ncycles):
         lattice, _, _ = mc_cycle(lattice, spin_inter, ext_field, temp)
         frames[cyc] += lattice
