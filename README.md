@@ -1,6 +1,6 @@
 # updown
 
-Python for running 1 or 2D Ising models and visualizing the results. The code
+Python for running 2D Ising models and visualizing the results. The code
 was designed to be simple and fast, allowing for the simulation of relatively
 large lattices.
 
