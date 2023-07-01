@@ -30,8 +30,9 @@ def energy(lattice: Lattice, spin_inter: float, ext_field: float) -> float:
                 + lattice[(iy - 1) % nrow, ix]
                 + lattice[iy, (ix - 1) % ncol]
             )
-            tE += -1 * ((spin_inter * spin * nbors) + (ext_field * spin))
-    return tE / 2
+            # Divide by to account for double counting -
+            tE += -1 * ((spin_inter * spin * nbors) / 2 + (ext_field * spin))
+    return tE
 
 
 @jit(nopython=True)  # type: ignore[misc]
