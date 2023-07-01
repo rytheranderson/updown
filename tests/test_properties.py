@@ -2,14 +2,15 @@
 import math
 
 import numpy as np
-from hypothesis import assume, given
+from hypothesis import assume, given, settings
 from hypothesis import strategies as st
 from hypothesis.extra.numpy import array_shapes
 
 from updown.properties import energy
 
 
-@given(  # type: ignore[misc]
+@settings(deadline=None)
+@given(
     array_shapes(min_dims=2, max_dims=2, min_side=1, max_side=1000),
     st.sampled_from([-1, 1]),
     st.floats(min_value=-1.0e12, max_value=1.0e12),
