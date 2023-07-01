@@ -1,7 +1,7 @@
 """Methods for Metropolis Monte Carlo simulations."""
 from __future__ import annotations
 
-from typing import Sequence
+from typing import Iterator, Sequence
 
 import numpy as np
 from numba import jit
@@ -57,7 +57,7 @@ def run(
     spin_inter: float = 1.0,
     ext_field: float = 0.0,
     temp: float = 1.0,
-) -> tuple[Lattice, list[Lattice]]:
+) -> Iterator[Lattice]:
     """Run a series of Monte Carlo cycles.
 
     Args:
@@ -71,13 +71,9 @@ def run(
     Returns:
         The last frame of the run and the lattice after each cycle.
     """
-    nrow, ncol = lattice.shape
-    frames = [np.zeros((nrow, ncol), dtype=np.int64) for i in range(ncycles)]
-    for cyc in range(ncycles):
+    for _ in range(ncycles):
         lattice, _, _ = mc_cycle(lattice, spin_inter, ext_field, temp)
-        frames[cyc] += lattice
-
-    return lattice, frames
+        yield lattice
 
 
 def run_temp_sequence(
@@ -86,7 +82,7 @@ def run_temp_sequence(
     ncycles: int,
     spin_inter: float = 1.0,
     ext_field: float = 0.0,
-) -> list[Lattice]:
+) -> Iterator[Lattice]:
     """Perform a series of runs at different temperatures, stitching together.
 
     Args:
@@ -97,15 +93,11 @@ def run_temp_sequence(
         spin_inter: The spin interaction parameter to use. Defaults to 1.0.
         ext_field: The external magnetic field to apply. Defaults to 0.0.
 
-    Returns:
+    Yields:
         The frames for each temperature, stitched together.
     """
-    all_frames = []
     for temp in temps:
-        print(f"temperature = {np.round(temp,3)}")
-        _, frames = run(
+        print(f"temperature = {np.round(temp, 3)}")
+        yield from run(
             lattice, ncycles, spin_inter=spin_inter, ext_field=ext_field, temp=temp
         )
-        all_frames.extend(frames)
-
-    return all_frames

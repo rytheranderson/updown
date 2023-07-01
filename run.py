@@ -77,7 +77,7 @@ def main() -> None:
         temps = np.linspace(args.start_temp, args.end_temp, args.ntemps)
         frames = run_temp_sequence(lattice, temps, args.ncycles)
     else:
-        _, frames = run(lattice, args.ncycles, temp=args.start_temp)
+        frames = run(lattice, args.ncycles, temp=args.start_temp)
     animate_run(frames, file=args.output, size=(args.height, args.width))
     print("--- %s seconds ---" % (time.time() - start_time))
 
