@@ -22,9 +22,5 @@ jobs:
         virtualenvs-create: false
         virtualenvs-in-project: false
         installer-parallel: true
-    - name: Install dependencies
-      run: poetry install --no-interaction --no-root
-    - name: Install library
-      run: poetry install --no-interaction
     - name: Test with tox
       run: poetry run tox
