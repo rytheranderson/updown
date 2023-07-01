@@ -30,6 +30,5 @@ def test_energy_correct_for_lattices_with_aligned_spins(
     nrows, ncols = lattice_shape
     lattice = direction * np.ones(lattice_shape, dtype=np.int64)
     nspins = nrows * ncols
-    ground_state_energy = -2 * spin_inter * nspins  # - direction*ext_field*nspins
-    currentE = energy(lattice, spin_inter, 0.0)
-    assert math.isclose(currentE, ground_state_energy)
+    ground_state_energy = -2 * spin_inter * nspins - direction * ext_field * nspins
+    assert math.isclose(energy(lattice, spin_inter, ext_field), ground_state_energy)
