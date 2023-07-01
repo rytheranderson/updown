@@ -25,3 +25,4 @@ htmlcov
 # Convenience
 test_files*
 test_scripts*
+*.coverage

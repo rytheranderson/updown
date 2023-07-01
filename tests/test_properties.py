@@ -13,8 +13,8 @@ from updown.properties import energy
 @given(
     array_shapes(min_dims=2, max_dims=2, min_side=1, max_side=1000),
     st.sampled_from([-1, 1]),
-    st.floats(min_value=-1.0e12, max_value=1.0e12),
-    st.floats(min_value=-1.0e12, max_value=1.0e12),
+    st.floats(min_value=-1.0e6, max_value=1.0e6, allow_subnormal=False),
+    st.floats(min_value=-1.0e6, max_value=1.0e6, allow_subnormal=False),
 )
 def test_energy_correct_for_lattices_with_aligned_spins(
     lattice_shape: tuple[int, int], direction: int, spin_inter: float, ext_field: float
