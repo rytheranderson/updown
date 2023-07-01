@@ -30,7 +30,7 @@ def energy(lattice: Lattice, spin_inter: float, ext_field: float) -> float:
                 + lattice[(iy - 1) % nrow, ix]
                 + lattice[iy, (ix - 1) % ncol]
             )
-            # Deduplicate double counted interactions
+            # Deduplicate double-counted interactions
             tE += -1 * ((spin_inter * spin * nbors) / 2 + (ext_field * spin))
     return tE
 
