@@ -97,7 +97,6 @@ def run_temp_sequence(
         The frames for each temperature, stitched together.
     """
     for temp in temps:
-        print(f"temperature = {np.round(temp, 3)}")
         yield from run(
             lattice, ncycles, spin_inter=spin_inter, ext_field=ext_field, temp=temp
         )
