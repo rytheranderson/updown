@@ -23,7 +23,7 @@ def mc_cycle(
         temp: The temperature.
 
     Returns:
-        The lattice after running a Metropolis Monte Carlo cycle.
+        The lattice, energy, and magnetization after the cycle.
     """
     temp = float(temp)
     nrow, ncol = lattice.shape
@@ -68,8 +68,8 @@ def run(
         ext_field: The external magnetic field to apply. Defaults to 0.0.
         temp: The temperature. Defaults to 1.0.
 
-    Returns:
-        The last frame of the run and the lattice after each cycle.
+    Yields:
+        The lattice after each cycle.
     """
     for _ in range(ncycles):
         lattice, _, _ = mc_cycle(lattice, spin_inter, ext_field, temp)
