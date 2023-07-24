@@ -32,4 +32,7 @@ def test_energy_correct_for_lattices_with_aligned_spins(
     lattice = direction * np.ones(lattice_shape, dtype=np.int64)
     nspins = nrows * ncols
     expected_energy = -2 * spin_inter * nspins - direction * ext_field * nspins
-    assert math.isclose(energy(lattice, spin_inter, ext_field), expected_energy)
+    # Compare to approximately 5 decimal places, set using rel_tol
+    assert math.isclose(
+        energy(lattice, spin_inter, ext_field), expected_energy, rel_tol=1.0e-5
+    )
