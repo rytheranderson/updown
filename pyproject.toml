@@ -15,8 +15,8 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.10"
-numpy = "^1.24.3"
-numba = "^0.57.0"
+numpy = "^1.26.1"
+numba = "^0.58.1"
 matplotlib = "^3.7.1"
 nptyping = "^2.5.0"
 
