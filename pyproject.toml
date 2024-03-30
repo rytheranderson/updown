@@ -21,39 +21,35 @@ matplotlib = "^3.8.3"
 nptyping = "^2.5.0"
 
 [tool.poetry.group.dev.dependencies]
-black = "^24.2.0"
 cruft = "^2.15.0"
-darglint = "^1.8.1"
-flake8 = "^7.0.0"
-flake8-docstrings = "^1.7.0"
-flake8-bugbear = "^24.2.6"
-hypothesis = "^6.98.15"
-isort = "^5.13.2"
-mypy = "^1.8.0"
-pre-commit = "^3.6.2"
-pytest = "^8.0.2"
-pytest-cov = "^4.1.0"
-pytest-mock = "^3.10.0"
-tbump = "^6.10.0"
+hypothesis = "^6.99.13"
+mypy = "^1.9.0"
+pre-commit = "^3.7.0"
+pytest = "^8.1.1"
+pytest-cov = "^5.0.0"
+pytest-mock = "^3.14.0"
+ruff = "^0.3.4"
+tbump = "^6.11.0"
 toml = "^0.10.2"
-tox = "^3.24"
-tox-gh-actions = "^2.8"
-tox-poetry-installer = "^0.10.0"
+tox = "^3.28.0"
+tox-gh-actions = "^2.12.0"
+tox-poetry-installer = "^0.10.3"
 
-[tool.black]
-line-length = 88
-experimental_string_processing = true
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.git
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | build
-  | dist
-)/
-'''
+[tool.ruff.lint]
+# B = flake8-bugbear
+# C9 = mccabe complexity
+# E = pycodestyle error
+# F = pyflakes
+# N = pep8-naming
+# PL = pylint
+# Q = flake8-quotes
+# RUF = ruf
+# W = pycodestyle warning
+select = ["B", "C9", "D", "E", "F", "N", "PL", "Q", "RUF", "W"]
+ignore = ["D10", "PLR0913"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
 
 [tool.tbump.version]
 current = "0.0.1"
