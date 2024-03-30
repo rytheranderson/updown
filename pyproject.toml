@@ -46,7 +46,6 @@ tox-poetry-installer = "^0.10.3"
 # RUF = ruf
 # W = pycodestyle warning
 select = ["B", "C9", "D", "E", "F", "N", "PL", "Q", "RUF", "W"]
-ignore = ["D10", "PLR0913"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
