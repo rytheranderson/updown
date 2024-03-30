@@ -8,12 +8,12 @@ dist/
 build/
 
 # Testing
-.coverage/
-htmlcov
-.hypothesis/
+.tox/
 .mypy_cache/
 .pytest_cache/
-.tox/
+.ruff_cache/
+.coverage/
+.hypothesis
 
 # Temp files
 .vscode/
