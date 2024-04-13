@@ -1,4 +1,5 @@
 """Script for running an Ising model MC simulation."""
+
 import argparse
 import time
 from pathlib import Path

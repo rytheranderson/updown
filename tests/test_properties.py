@@ -1,4 +1,5 @@
 """Tests for the properties calculated in the properties module."""
+
 import math
 
 import numpy as np

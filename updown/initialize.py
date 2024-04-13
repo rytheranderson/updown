@@ -1,4 +1,5 @@
 """Methods for system initialization."""
+
 from __future__ import annotations
 
 import numpy as np
@@ -16,7 +17,8 @@ def random(nrow: int, ncol: int) -> Lattice:
     Returns:
         The initialized lattice.
     """
-    return np.where(np.random.random((nrow, ncol)) > 0.5, 1, -1)
+    thresh = 0.5
+    return np.where(np.random.random((nrow, ncol)) > thresh, 1, -1)
 
 
 def uniform(nrow: int, ncol: int, spin: int = 1) -> Lattice:

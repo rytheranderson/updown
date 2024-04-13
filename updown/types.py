@@ -1,4 +1,5 @@
 """Types used throughout updown."""
+
 from typing import NewType
 
 from nptyping import Int64, NDArray, Shape

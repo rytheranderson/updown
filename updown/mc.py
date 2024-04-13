@@ -1,4 +1,5 @@
 """Methods for Metropolis Monte Carlo simulations."""
+
 from __future__ import annotations
 
 from typing import Iterator, Sequence

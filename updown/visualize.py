@@ -1,4 +1,5 @@
 """Methods for visualizing results."""
+
 from __future__ import annotations
 
 from pathlib import Path
