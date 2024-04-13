@@ -30,4 +30,4 @@ repos:
     hooks:
     -   id: mypy
         args: [--ignore-missing-imports, --strict, --show-error-codes]
-        additional_dependencies: [pytest, hypothesis]
+        additional_dependencies: [pytest, hypothesis, pillow]

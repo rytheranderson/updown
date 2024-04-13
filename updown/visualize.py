@@ -22,7 +22,7 @@ def animate_run(
         size: The size in pixels of the output .gif. Defaults to (200, 200).
     """
     gif = (
-        Image.fromarray(np.uint8(frame))  # type-ignore[no-untyped-call]
+        Image.fromarray(np.uint8(frame))  # type: ignore[no-untyped-call]
         .resize(size)
         .convert("RGB")
         for frame in frames
