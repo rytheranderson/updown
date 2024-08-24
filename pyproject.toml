@@ -22,18 +22,17 @@ nptyping = "^2.5.0"
 
 [tool.poetry.group.dev.dependencies]
 cruft = "^2.15.0"
-hypothesis = "^6.108.4"
-mypy = "^1.11.0"
-pre-commit = "^3.7.0"
-pytest = "^8.1.1"
+hypothesis = "^6.111.1"
+mypy = "^1.11.1"
+pre-commit = "^3.8.0"
+pytest = "^8.3.2"
 pytest-cov = "^5.0.0"
 pytest-mock = "^3.14.0"
 ruff = "^0.5.0"
 tbump = "^6.11.0"
 toml = "^0.10.2"
-tox = "^3.28.0"
-tox-gh-actions = "^2.12.0"
-tox-poetry-installer = "^0.10.3"
+tox = "^4.18.0"
+tox-gh-actions = "^3.2.0"
 
 [tool.ruff.lint]
 # B = flake8-bugbear
