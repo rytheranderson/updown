@@ -1,6 +1,6 @@
 {
   "template": "https://github.com/rytheranderson/oatmeal-raisin/",
-  "commit": "9f42b6239c8a4c68b177552ea8084efdc438d67e",
+  "commit": "06dc52b60d8cd0841a443f829f4546affe05feec",
   "checkout": null,
   "context": {
     "cookiecutter": {
